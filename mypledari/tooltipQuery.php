@@ -8,6 +8,7 @@ $search = @$_GET['search'];
 $display = @$_GET['display'];
 $modus = @$_GET['modus'];
 header('Content-type: application/json');
+header('Access-Control-Allow-Origin: *');
 
 $SQLString = SqlTooltipQueryGenerator::getQuery($search, $display);
 if (!is_null($SQLString)) {
