@@ -2,21 +2,21 @@
 
 include "../config.php";
 
-$pled = @$_GET['pled'];
-$search = @$_GET['search'];
-$display = @$_GET['display'];
-$modus = @$_GET['modus'];
+$searchTerm = @$_GET['searchTerm'];
+$searchLanguage = @$_GET['searchLanguage'];
+$displayLanguage = @$_GET['displayLanguage'];
+
 header('Content-type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-$SQLString = getQueryStatement($search, $display);
+$SQLString = getQueryStatement($searchLanguage, $displayLanguage);
 
 $connection = mysqli_connect('localhost', $mysql_user, $mysql_pass, $mysql_db);
 
 $stmt = $connection->prepare($SQLString);
-$placeholderList = '%, '.$pled;
-$placeholderFreeText = '%'.$pled.'%';
-$stmt->bind_param('sss', $pled, $placeholderList, $placeholderFreeText);
+$placeholderList = '%, '.$searchTerm;
+$placeholderFreeText = '%'.$searchTerm.'%';
+$stmt->bind_param('sss', $searchTerm, $placeholderList, $placeholderFreeText);
 $stmt->execute();
 
 $res = $stmt->get_result();
