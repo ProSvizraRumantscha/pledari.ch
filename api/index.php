@@ -16,7 +16,7 @@ $connection = mysqli_connect('localhost', $mysql_user, $mysql_pass, $mysql_db);
 $stmt = $connection->prepare($SQLString);
 $placeholderList = '%, '.$searchTerm;
 $placeholderListMultiple = '%, '.$searchTerm.',%';
-$placeholderFreeText = '%'.$searchTerm.'%';
+$placeholderFreeText = '% '.$searchTerm.'%';
 $stmt->bind_param('ssss', $searchTerm, $placeholderList, $placeholderListMultiple, $placeholderFreeText);
 $stmt->execute();
 
