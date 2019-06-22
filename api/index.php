@@ -15,8 +15,9 @@ $connection = mysqli_connect('localhost', $mysql_user, $mysql_pass, $mysql_db);
 
 $stmt = $connection->prepare($SQLString);
 $placeholderList = '%, '.$searchTerm;
+$placeholderListMultiple = '%, '.$searchTerm.',%';
 $placeholderFreeText = '%'.$searchTerm.'%';
-$stmt->bind_param('sss', $searchTerm, $placeholderList, $placeholderFreeText);
+$stmt->bind_param('ssss', $searchTerm, $placeholderList, $placeholderListMultiple, $placeholderFreeText);
 $stmt->execute();
 
 $res = $stmt->get_result();
@@ -34,6 +35,7 @@ function getQueryStatement(string $searchLanguage, string $displayLanguage) {
     'Source_Table_Row_ID as sourceId ' .
     'FROM Alllanguages ' .
     'WHERE ' .$searchLanguage. '_search LIKE lower(?) ' .
+    'OR ' .$searchLanguage. '_search LIKE lower(?) ' .
     'OR ' .$searchLanguage. '_search LIKE lower(?) ' .
     'OR Conjugation LIKE lower(?) ';
 }
